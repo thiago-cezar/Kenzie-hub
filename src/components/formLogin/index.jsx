@@ -18,19 +18,33 @@ export default function FormLogin() {
   });
 
   async function send(data) {
-    const res = await api.post("/sessions", data);
-    localStorage.setItem("@token", res.data.token);
-    localStorage.setItem("@id", res.data.user.id);
-    toast.success("Bem vindo!", {
-      style: {
-        borderRadius: "10px",
-        background: "var( --Grey-2)",
-        color: "var(--Grey-0)",
-        fontSize: "14px",
-        fontWeight: "700",
-      },
-    });
-    navigate("/dasboard", { replace: true });
+    await api
+      .post("/sessions", data)
+      .then((res) => {
+        localStorage.setItem("@token", res.data.token);
+        localStorage.setItem("@id", res.data.user.id);
+        toast.success("Bem vindo!", {
+          style: {
+            borderRadius: "10px",
+            background: "var( --Grey-2)",
+            color: "var(--Grey-0)",
+            fontSize: "14px",
+            fontWeight: "700",
+          },
+        });
+        navigate("/dasboard", { replace: true });
+      })
+      .catch((err) => {
+        toast.error("Email ou senha invalidos", {
+          style: {
+            borderRadius: "10px",
+            background: "var( --Grey-2)",
+            color: "var(--Grey-0)",
+            fontSize: "14px",
+            fontWeight: "700",
+          },
+        });
+      });
   }
 
   return (
