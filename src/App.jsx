@@ -1,14 +1,15 @@
 import Routes from "./routes";
 import Global from "./style/globalStyle";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "./Providers/AuthContext";
 
 function App() {
   return (
-    <div className="App">
+    <AuthProvider>
       <Global />
       <Toaster />
       <Routes />
-    </div>
+    </AuthProvider>
   );
 }
 

@@ -16,8 +16,8 @@ export const schemaRegister = yup.object({
   password: yup
     .string()
     .required("campo obrigatório")
-    .min(8, "Minimo 8 caracteres")
-    .matches("(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])", "senha invalida"),
+    .min(8, "Mínimo 8 caracteres")
+    .matches(/(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])/, "senha invalida"),
   confirmPassword: yup
     .string()
     .required("campo obrigatório")
@@ -26,4 +26,9 @@ export const schemaRegister = yup.object({
   course_module: yup.string().required("campo obrigatório"),
   name: yup.string().required("campo obrigatório"),
   bio: yup.string().required("campo obrigatório"),
+});
+
+export const schemaModal = yup.object({
+  title: yup
+    .string().required("campo obrigatório")
 });

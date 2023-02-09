@@ -1,54 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import api from "../../services/api";
 import { Form } from "../../style/form/style";
-import { schemaRegister } from "../../validators/Validators";
-import toast from "react-hot-toast";
+import { schemaRegister } from "../../schemas/Validators";
+import { useContext } from "react";
+import { AuthContext } from "../../Providers/AuthContext";
+import { IUserRegister } from "../../Providers/AuthContext";
 
 export default function FormRegister() {
-  const navigate = useNavigate();
+  const { signRegister } = useContext(AuthContext);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUserRegister>({
     resolver: yupResolver(schemaRegister),
   });
-  async function send(data) {
-    await api
-      .post("/users", data)
-      .then((res) => {
-        toast.success("Conta criada com sucesso!", {
-          style: {
-            borderRadius: "10px",
-            background: "var( --Grey-2)",
-            color: "var(--Grey-0)",
-            fontSize: "14px",
-            fontWeight: "700",
-          },
-        });
-        navigate("/", { replace: true });
-      })
-      .catch((err) =>
-        toast.error("Ops! Algo deu errado", {
-          style: {
-            borderRadius: "10px",
-            background: "var( --Grey-2)",
-            color: "var(--Grey-0)",
-            fontSize: "14px",
-            fontWeight: "700",
-          },
-        })
-      );
+  type Props = {
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   }
 
   return (
-    <Form onSubmit={handleSubmit(send)}>
+    <Form onSubmit={handleSubmit(signRegister)}>
       <span>
         <h1>Crie sua conta</h1>
-        <p>Rapido e grátis, vamos nessa</p>
+        <p>Rápido e grátis, vamos nessa</p>
       </span>
       <div>
         <label htmlFor="name">Nome</label>
